@@ -27,14 +27,23 @@ add_library(msdfgen
 	"src/shape-description.cpp"
 	"src/Shape.cpp"
 	"src/SignedDistance.cpp"
-	"src/Vector2.cpp")
+	"src/Vector2.cpp"
+	)
 
 add_library(msdfgen::msdfgen ALIAS msdfgen)
 
-set_target_properties(msdfgen PROPERTIES PUBLIC_HEADER "${msdfgen_HEADERS}")
 target_include_directories(msdfgen PUBLIC
 	$<INSTALL_INTERFACE:include>
 	$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+)
+
+add_library(msdfgen-ext "src/ext/import-font.cpp")
+add_library(msdfgen::msdfgen-ext ALIAS msdfgen-ext)
+
+target_link_libraries(msdfgen-ext PUBLIC msdfgen::msdfgen freetype)
+target_include_directories(msdfgen-ext PUBLIC
+	$<INSTALL_INTERFACE:include/ext>
+	$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include/ext>
 )
 
 if(MSDFGEN_USE_CPP11)
