@@ -27,31 +27,7 @@ add_library(msdfgen
 	"src/shape-description.cpp"
 	"src/Shape.cpp"
 	"src/SignedDistance.cpp"
-	"src/Vector2.cpp"
-	"include/core/arithmetics.hpp"
-	"include/core/Bitmap.h"
-	"include/core/Bitmap.hpp"
-	"include/core/BitmapRef.hpp"
-	"include/core/contour-combiners.h"
-	"include/core/Contour.h"
-	"include/core/edge-coloring.h"
-	"include/core/edge-segments.h"
-	"include/core/edge-selectors.h"
-	"include/core/EdgeColor.h"
-	"include/core/EdgeHolder.h"
-	"include/core/equation-solver.h"
-	"include/core/estimate-sdf-error.h"
-	"include/core/pixel-conversion.hpp"
-	"include/core/rasterization.h"
-	"include/core/render-sdf.h"
-	"include/core/save-bmp.h"
-	"include/core/save-tiff.h"
-	"include/core/Scanline.h"
-	"include/core/shape-description.h"
-	"include/core/Shape.h"
-	"include/core/SignedDistance.h"
-	"include/core/Vector2.h"
-	"include/msdfgen.h")
+	"src/Vector2.cpp")
 
 add_library(msdfgen::msdfgen ALIAS msdfgen)
 
