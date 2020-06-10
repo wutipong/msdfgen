@@ -1,9 +1,9 @@
 
-#include "../msdfgen.h"
+#include "msdfgen.h"
 
 #include <vector>
-#include "edge-selectors.h"
-#include "contour-combiners.h"
+#include "core/edge-selectors.h"
+#include "core/contour-combiners.h"
 
 namespace msdfgen {
 

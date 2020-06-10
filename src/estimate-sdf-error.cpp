@@ -1,8 +1,8 @@
 
-#include "estimate-sdf-error.h"
+#include "core/estimate-sdf-error.h"
 
 #include <cmath>
-#include "arithmetics.hpp"
+#include "core/arithmetics.hpp"
 
 namespace msdfgen {
 

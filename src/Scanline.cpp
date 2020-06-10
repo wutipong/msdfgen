@@ -1,8 +1,8 @@
 
-#include "Scanline.h"
+#include "core/Scanline.h"
 
 #include <algorithm>
-#include "arithmetics.hpp"
+#include "core/arithmetics.hpp"
 
 namespace msdfgen {
 

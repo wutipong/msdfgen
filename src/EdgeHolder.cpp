@@ -1,5 +1,5 @@
 
-#include "EdgeHolder.h"
+#include "core/EdgeHolder.h"
 
 namespace msdfgen {
 

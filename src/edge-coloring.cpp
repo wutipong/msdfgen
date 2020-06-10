@@ -1,5 +1,5 @@
 
-#include "edge-coloring.h"
+#include "core/edge-coloring.h"
 
 namespace msdfgen {
 

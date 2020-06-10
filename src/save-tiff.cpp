@@ -1,7 +1,7 @@
 
 #define _CRT_SECURE_NO_WARNINGS
 
-#include "save-tiff.h"
+#include "core/save-tiff.h"
 
 #include <cstdio>
 

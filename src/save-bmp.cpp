@@ -1,7 +1,7 @@
 
 #define _CRT_SECURE_NO_WARNINGS
 
-#include "save-bmp.h"
+#include "core/save-bmp.h"
 
 #include <cstdio>
 
@@ -14,7 +14,7 @@
     typedef unsigned char uint8_t;
 #endif
 
-#include "pixel-conversion.hpp"
+#include "core/pixel-conversion.hpp"
 
 namespace msdfgen {
 

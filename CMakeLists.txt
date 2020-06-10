@@ -4,58 +4,55 @@ project(msdfgen VERSION 1.7.1 LANGUAGES CXX)
 option(MSDFGEN_USE_OPENMP "Build with OpenMP support for multithreaded code" OFF)
 option(MSDFGEN_USE_CPP11 "Build with C++11 enabled" ON)
 
-find_package(Freetype CONFIG REQUIRED)
+find_package(freetype CONFIG REQUIRED)
 
 #----------------------------------------------------------------
 # Target configuration
 #----------------------------------------------------------------
 
 add_library(msdfgen 
-	"src\Contour.cpp"
-	"src\edge-coloring.cpp"
-	"src\edge-segments.cpp"
-	"src\edge-selectors.cpp"
-	"src\EdgeHolder.cpp"
-	"src\equation-solver.cpp"
-	"src\estimate-sdf-error.cpp"
-	"src\msdfgen.cpp"
-	"src\rasterization.cpp"
-	"src\render-sdf.cpp"
-	"src\save-bmp.cpp"
-	"src\save-tiff.cpp"
-	"src\Scanline.cpp"
-	"src\shape-description.cpp"
-	"src\Shape.cpp"
-	"src\SignedDistance.cpp"
-	"src\Vector2.cpp")
+	"src/Contour.cpp"
+	"src/edge-coloring.cpp"
+	"src/edge-segments.cpp"
+	"src/edge-selectors.cpp"
+	"src/EdgeHolder.cpp"
+	"src/equation-solver.cpp"
+	"src/estimate-sdf-error.cpp"
+	"src/msdfgen.cpp"
+	"src/rasterization.cpp"
+	"src/render-sdf.cpp"
+	"src/save-bmp.cpp"
+	"src/save-tiff.cpp"
+	"src/Scanline.cpp"
+	"src/shape-description.cpp"
+	"src/Shape.cpp"
+	"src/SignedDistance.cpp"
+	"src/Vector2.cpp"
+	"include/core/arithmetics.hpp"
+	"include/core/Bitmap.h"
+	"include/core/Bitmap.hpp"
+	"include/core/BitmapRef.hpp"
+	"include/core/contour-combiners.h"
+	"include/core/Contour.h"
+	"include/core/edge-coloring.h"
+	"include/core/edge-segments.h"
+	"include/core/edge-selectors.h"
+	"include/core/EdgeColor.h"
+	"include/core/EdgeHolder.h"
+	"include/core/equation-solver.h"
+	"include/core/estimate-sdf-error.h"
+	"include/core/pixel-conversion.hpp"
+	"include/core/rasterization.h"
+	"include/core/render-sdf.h"
+	"include/core/save-bmp.h"
+	"include/core/save-tiff.h"
+	"include/core/Scanline.h"
+	"include/core/shape-description.h"
+	"include/core/Shape.h"
+	"include/core/SignedDistance.h"
+	"include/core/Vector2.h"
+	"include/msdfgen.h")
 
-add_library(msdfgen 
-	"include\core\arithmetics.hpp"
-	"include\core\Bitmap.h"
-	"include\core\Bitmap.hpp"
-	"include\core\BitmapRef.hpp"
-	"include\core\contour-combiners.h"
-	"include\core\Contour.h"
-	"include\core\edge-coloring.h"
-	"include\core\edge-segments.h"
-	"include\core\edge-selectors.h"
-	"include\core\EdgeColor.h"
-	"include\core\EdgeHolder.h"
-	"include\core\equation-solver.h"
-	"include\core\estimate-sdf-error.h"
-	"include\core\pixel-conversion.hpp"
-	"include\core\rasterization.h"
-	"include\core\render-sdf.h"
-	"include\core\save-bmp.h"
-	"include\core\save-tiff.h"
-	"include\core\Scanline.h"
-	"include\core\shape-description.h"
-	"include\core\Shape.h"
-	"include\core\SignedDistance.h"
-	"include\core\Vector2.h"
-)
-
-add_library(msdfgen "include/msdfgen.h")
 add_library(msdfgen::msdfgen ALIAS msdfgen)
 
 set_target_properties(msdfgen PROPERTIES PUBLIC_HEADER "${msdfgen_HEADERS}")

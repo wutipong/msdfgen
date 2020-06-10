@@ -1,5 +1,5 @@
 
-#include "equation-solver.h"
+#include "core/equation-solver.h"
 
 #define _USE_MATH_DEFINES
 #include <cmath>

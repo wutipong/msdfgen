@@ -1,8 +1,8 @@
 
-#include "render-sdf.h"
+#include "core/render-sdf.h"
 
-#include "arithmetics.hpp"
-#include "pixel-conversion.hpp"
+#include "core/arithmetics.hpp"
+#include "core/pixel-conversion.hpp"
 
 namespace msdfgen {
 

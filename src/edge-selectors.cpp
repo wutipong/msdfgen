@@ -1,7 +1,7 @@
 
-#include "edge-selectors.h"
+#include "core/edge-selectors.h"
 
-#include "arithmetics.hpp"
+#include "core/arithmetics.hpp"
 
 namespace msdfgen {
 

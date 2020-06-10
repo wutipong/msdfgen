@@ -1,8 +1,8 @@
 
-#include "rasterization.h"
+#include "core/rasterization.h"
 
 #include <vector>
-#include "arithmetics.hpp"
+#include "core/arithmetics.hpp"
 
 namespace msdfgen {
 
