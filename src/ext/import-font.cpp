@@ -79,7 +79,7 @@ bool getFontWhitespaceWidth(double &spaceAdvance, double &tabAdvance, FT_Face fa
 bool loadGlyph(Shape &output, FT_Face face, unicode_t unicode, double *advance) {
 	FT_UInt index = FT_Get_Char_Index(face, unicode);
 	
-	return loadGlyphIndex(shape, face, index, advance);
+	return loadGlyphIndex(output, face, index, advance);
 }
 
 bool loadGlyphIndex(Shape &output, FT_Face face, FT_UInt index, double *advance) {
