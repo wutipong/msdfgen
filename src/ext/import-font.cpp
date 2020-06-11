@@ -77,8 +77,6 @@ bool getFontWhitespaceWidth(double &spaceAdvance, double &tabAdvance, FT_Face fa
 }
 
 bool loadGlyph(Shape &output, FT_Face face, unicode_t unicode, double *advance) {
-    if (!font)
-        return false;
     FT_Error error = FT_Load_Char(face, unicode, FT_LOAD_NO_SCALE);
     if (error)
         return false;
