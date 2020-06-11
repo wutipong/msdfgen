@@ -12,6 +12,7 @@ find_package(freetype CONFIG REQUIRED)
 
 add_library(msdfgen 
 	"src/Contour.cpp"
+	"src/contour-combiners.cpp"
 	"src/edge-coloring.cpp"
 	"src/edge-segments.cpp"
 	"src/edge-selectors.cpp"
