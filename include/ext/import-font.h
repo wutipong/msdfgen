@@ -11,9 +11,6 @@ namespace msdfgen {
 
 typedef unsigned unicode_t;
 
-class FreetypeHandle;
-class FontHandle;
-
 /// Global metrics of a typeface (in font units).
 struct FontMetrics {
     /// The size of one EM.
@@ -26,17 +23,13 @@ struct FontMetrics {
     double underlineY, underlineThickness;
 };
 
-/// Loads a font file and returns its handle.
-FontHandle * loadFont(FT_Library library, const char *filename);
-/// Unloads a font file.
-void destroyFont(FontHandle *font);
 /// Outputs the metrics of a font file.
-bool getFontMetrics(FontMetrics &metrics, FontHandle *font);
+bool getFontMetrics(FontMetrics &metrics, FT_Face face);
 /// Outputs the width of the space and tab characters.
-bool getFontWhitespaceWidth(double &spaceAdvance, double &tabAdvance, FontHandle *font);
+bool getFontWhitespaceWidth(double &spaceAdvance, double &tabAdvance, FT_Face face);
 /// Loads the geometry of a glyph from a font file.
-bool loadGlyph(Shape &output, FontHandle *font, unicode_t unicode, double *advance = NULL);
+bool loadGlyph(Shape &output, FT_Face face, unicode_t unicode, double *advance = NULL);
 /// Outputs the kerning distance adjustment between two specific glyphs.
-bool getKerning(double &output, FontHandle *font, unicode_t unicode1, unicode_t unicode2);
+bool getKerning(double &output, FT_Face face, unicode_t unicode1, unicode_t unicode2);
 
 }

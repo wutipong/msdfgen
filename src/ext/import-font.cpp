@@ -12,18 +12,6 @@ namespace msdfgen {
 #define REQUIRE(cond) { if (!(cond)) return false; }
 #define F26DOT6_TO_DOUBLE(x) (1/64.*double(x))
 
-class FontHandle {
-    friend FontHandle * loadFont(FT_Library library, const char *filename);
-    friend void destroyFont(FontHandle *font);
-    friend bool getFontMetrics(FontMetrics &metrics, FontHandle *font);
-    friend bool getFontWhitespaceWidth(double &spaceAdvance, double &tabAdvance, FontHandle *font);
-    friend bool loadGlyph(Shape &output, FontHandle *font, unicode_t unicode, double *advance);
-    friend bool getKerning(double &output, FontHandle *font, unicode_t unicode1, unicode_t unicode2);
-
-    FT_Face face;
-
-};
-
 struct FtContext {
     Point2 position;
     Shape *shape;
@@ -66,55 +54,38 @@ static int ftCubicTo(const FT_Vector *control1, const FT_Vector *control2, const
     return 0;
 }
 
-FontHandle * loadFont(FT_Library library, const char *filename) {
-    if (!library)
-        return NULL;
-    FontHandle *handle = new FontHandle;
-    FT_Error error = FT_New_Face(library, filename, 0, &handle->face);
-    if (error) {
-        delete handle;
-        return NULL;
-    }
-    return handle;
-}
-
-void destroyFont(FontHandle *font) {
-    FT_Done_Face(font->face);
-    delete font;
-}
-
-bool getFontMetrics(FontMetrics &metrics, FontHandle *font) {
-    metrics.emSize = F26DOT6_TO_DOUBLE(font->face->units_per_EM);
-    metrics.ascenderY = F26DOT6_TO_DOUBLE(font->face->ascender);
-    metrics.descenderY = F26DOT6_TO_DOUBLE(font->face->descender);
-    metrics.lineHeight = F26DOT6_TO_DOUBLE(font->face->height);
-    metrics.underlineY = F26DOT6_TO_DOUBLE(font->face->underline_position);
-    metrics.underlineThickness = F26DOT6_TO_DOUBLE(font->face->underline_thickness);
+bool getFontMetrics(FontMetrics &metrics, FT_Face face) {
+    metrics.emSize = F26DOT6_TO_DOUBLE(face->units_per_EM);
+    metrics.ascenderY = F26DOT6_TO_DOUBLE(face->ascender);
+    metrics.descenderY = F26DOT6_TO_DOUBLE(face->descender);
+    metrics.lineHeight = F26DOT6_TO_DOUBLE(face->height);
+    metrics.underlineY = F26DOT6_TO_DOUBLE(face->underline_position);
+    metrics.underlineThickness = F26DOT6_TO_DOUBLE(face->underline_thickness);
     return true;
 }
 
-bool getFontWhitespaceWidth(double &spaceAdvance, double &tabAdvance, FontHandle *font) {
-    FT_Error error = FT_Load_Char(font->face, ' ', FT_LOAD_NO_SCALE);
+bool getFontWhitespaceWidth(double &spaceAdvance, double &tabAdvance, FT_Face face) {
+    FT_Error error = FT_Load_Char(face, ' ', FT_LOAD_NO_SCALE);
     if (error)
         return false;
-    spaceAdvance = F26DOT6_TO_DOUBLE(font->face->glyph->advance.x);
-    error = FT_Load_Char(font->face, '\t', FT_LOAD_NO_SCALE);
+    spaceAdvance = F26DOT6_TO_DOUBLE(face->glyph->advance.x);
+    error = FT_Load_Char(face, '\t', FT_LOAD_NO_SCALE);
     if (error)
         return false;
-    tabAdvance = F26DOT6_TO_DOUBLE(font->face->glyph->advance.x);
+    tabAdvance = F26DOT6_TO_DOUBLE(face->glyph->advance.x);
     return true;
 }
 
-bool loadGlyph(Shape &output, FontHandle *font, unicode_t unicode, double *advance) {
+bool loadGlyph(Shape &output, FT_Face face, unicode_t unicode, double *advance) {
     if (!font)
         return false;
-    FT_Error error = FT_Load_Char(font->face, unicode, FT_LOAD_NO_SCALE);
+    FT_Error error = FT_Load_Char(face, unicode, FT_LOAD_NO_SCALE);
     if (error)
         return false;
     output.contours.clear();
     output.inverseYAxis = false;
     if (advance)
-        *advance = F26DOT6_TO_DOUBLE(font->face->glyph->advance.x);
+        *advance = F26DOT6_TO_DOUBLE(face->glyph->advance.x);
 
     FtContext context = { };
     context.shape = &output;
@@ -125,7 +96,7 @@ bool loadGlyph(Shape &output, FontHandle *font, unicode_t unicode, double *advan
     ftFunctions.cubic_to = &ftCubicTo;
     ftFunctions.shift = 0;
     ftFunctions.delta = 0;
-    error = FT_Outline_Decompose(&font->face->glyph->outline, &ftFunctions, &context);
+    error = FT_Outline_Decompose(&face->glyph->outline, &ftFunctions, &context);
     if (error)
         return false;
     if (!output.contours.empty() && output.contours.back().edges.empty())
@@ -133,9 +104,9 @@ bool loadGlyph(Shape &output, FontHandle *font, unicode_t unicode, double *advan
     return true;
 }
 
-bool getKerning(double &output, FontHandle *font, unicode_t unicode1, unicode_t unicode2) {
+bool getKerning(double &output, FT_Face face, unicode_t unicode1, unicode_t unicode2) {
     FT_Vector kerning;
-    if (FT_Get_Kerning(font->face, FT_Get_Char_Index(font->face, unicode1), FT_Get_Char_Index(font->face, unicode2), FT_KERNING_UNSCALED, &kerning)) {
+    if (FT_Get_Kerning(face, FT_Get_Char_Index(face, unicode1), FT_Get_Char_Index(face, unicode2), FT_KERNING_UNSCALED, &kerning)) {
         output = 0;
         return false;
     }
