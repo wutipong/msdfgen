@@ -2,6 +2,9 @@
 #pragma once
 
 #include <cstdlib>
+#include <ft2build.h>
+#include FT_FREETYPE_H
+
 #include "../core/Shape.h"
 
 namespace msdfgen {
@@ -23,12 +26,8 @@ struct FontMetrics {
     double underlineY, underlineThickness;
 };
 
-/// Initializes the FreeType library.
-FreetypeHandle * initializeFreetype();
-/// Deinitializes the FreeType library.
-void deinitializeFreetype(FreetypeHandle *library);
 /// Loads a font file and returns its handle.
-FontHandle * loadFont(FreetypeHandle *library, const char *filename);
+FontHandle * loadFont(FT_Library library, const char *filename);
 /// Unloads a font file.
 void destroyFont(FontHandle *font);
 /// Outputs the metrics of a font file.

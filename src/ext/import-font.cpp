@@ -7,26 +7,13 @@
 #include FT_FREETYPE_H
 #include FT_OUTLINE_H
 
-#ifdef _WIN32
-    #pragma comment(lib, "freetype.lib")
-#endif
-
 namespace msdfgen {
 
 #define REQUIRE(cond) { if (!(cond)) return false; }
 #define F26DOT6_TO_DOUBLE(x) (1/64.*double(x))
 
-class FreetypeHandle {
-    friend FreetypeHandle * initializeFreetype();
-    friend void deinitializeFreetype(FreetypeHandle *library);
-    friend FontHandle * loadFont(FreetypeHandle *library, const char *filename);
-
-    FT_Library library;
-
-};
-
 class FontHandle {
-    friend FontHandle * loadFont(FreetypeHandle *library, const char *filename);
+    friend FontHandle * loadFont(FT_Library library, const char *filename);
     friend void destroyFont(FontHandle *font);
     friend bool getFontMetrics(FontMetrics &metrics, FontHandle *font);
     friend bool getFontWhitespaceWidth(double &spaceAdvance, double &tabAdvance, FontHandle *font);
@@ -79,26 +66,11 @@ static int ftCubicTo(const FT_Vector *control1, const FT_Vector *control2, const
     return 0;
 }
 
-FreetypeHandle * initializeFreetype() {
-    FreetypeHandle *handle = new FreetypeHandle;
-    FT_Error error = FT_Init_FreeType(&handle->library);
-    if (error) {
-        delete handle;
-        return NULL;
-    }
-    return handle;
-}
-
-void deinitializeFreetype(FreetypeHandle *library) {
-    FT_Done_FreeType(library->library);
-    delete library;
-}
-
-FontHandle * loadFont(FreetypeHandle *library, const char *filename) {
+FontHandle * loadFont(FT_Library library, const char *filename) {
     if (!library)
         return NULL;
     FontHandle *handle = new FontHandle;
-    FT_Error error = FT_New_Face(library->library, filename, 0, &handle->face);
+    FT_Error error = FT_New_Face(library, filename, 0, &handle->face);
     if (error) {
         delete handle;
         return NULL;
