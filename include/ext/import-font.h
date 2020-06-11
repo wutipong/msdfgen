@@ -29,6 +29,8 @@ bool getFontMetrics(FontMetrics &metrics, FT_Face face);
 bool getFontWhitespaceWidth(double &spaceAdvance, double &tabAdvance, FT_Face face);
 /// Loads the geometry of a glyph from a font file.
 bool loadGlyph(Shape &output, FT_Face face, unicode_t unicode, double *advance = NULL);
+/// Loads the geometry of a glyph from a font file.
+bool loadGlyphIndex(Shape &output, FT_Face face, FT_UInt index, double *advance = NULL);
 /// Outputs the kerning distance adjustment between two specific glyphs.
 bool getKerning(double &output, FT_Face face, unicode_t unicode1, unicode_t unicode2);
 

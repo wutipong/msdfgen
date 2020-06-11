@@ -77,7 +77,13 @@ bool getFontWhitespaceWidth(double &spaceAdvance, double &tabAdvance, FT_Face fa
 }
 
 bool loadGlyph(Shape &output, FT_Face face, unicode_t unicode, double *advance) {
-    FT_Error error = FT_Load_Char(face, unicode, FT_LOAD_NO_SCALE);
+	FT_UInt index = FT_Get_Char_Index(face, unicode);
+	
+	return loadGlyphAt(shape, face, index, advance);
+}
+
+bool loadGlyphAt(Shape &output, FT_Face face, FT_UInt index, double *advance) {
+    FT_Error error = FT_Load_Glyph(face, index, FT_LOAD_NO_SCALE);
     if (error)
         return false;
     output.contours.clear();
